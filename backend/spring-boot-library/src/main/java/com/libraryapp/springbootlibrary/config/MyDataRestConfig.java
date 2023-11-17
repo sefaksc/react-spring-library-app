@@ -18,17 +18,17 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         config.exposeIdsFor(Book.class);
 
-        disableHttpMethos(Book.class,config,theUnsupportedActions);
+        disableHttpMethods(Book.class,config,theUnsupportedActions);
 
         /* Configure CORS Mapping */
         cors.addMapping(config.getBasePath() + "/**")
                 .allowedOrigins(theAllowedOrigins);
     }
 
-    private void disableHttpMethos(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions){
+    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions){
         config.getExposureConfiguration()
                 .forDomainType(theClass)
-                .withAssociationExposure(((metdata, httpMethods) ->
+                .withItemExposure(((metdata, httpMethods) ->
                         httpMethods.disable(theUnsupportedActions)))
                 .withCollectionExposure((metdata, httpMethods) ->
                         httpMethods.disable(theUnsupportedActions));
